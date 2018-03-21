@@ -1,0 +1,81 @@
+body {
+  margin: 3rem;
+  color: #666;
+  border-box;
+}
+
+h2 {
+  font-weight: bold;
+  line-height: 2rem;
+}
+
+input {
+  margin: 3rem;
+  margin-bottom: 1rem;
+  width: 495px;
+}
+canvas {
+  width: 495px;
+  height: 495px;
+  border: 1px solid black;
+  margin: 3rem;
+  display: inline-block;
+  float: left;
+}
+
+.stats {
+  width: 300px;
+  display: inline;
+  float: left;
+  height: 700px;
+}
+
+.stats li {
+  margin: 1rem;
+  font-size: 0.8rem;
+  float: left;
+}
+
+.stats h3 {
+  font-weight: 700;
+}
+
+.half-full {
+  color: #ffad33;
+}
+
+.full {
+  color: #F33;
+}
+
+.logs {
+  width: 475px;
+  border: 1px solid #666;
+  height: 100px;
+  margin: 0 3rem;
+  padding: 10px;
+  overflow: auto;
+}
+
+.who {
+  line-height: 1.2rem;
+}
+
+.you:before {
+  content: "Ty: ";
+  color: black;
+  font-weight: bold;
+  text-align: right;
+}
+
+.truck:before {
+  content: "Śmieciarka: ";
+  color: blue;
+  font-weight: bold;
+}
+
+.info:before {
+  content: "Info: ";
+  color: green;
+  font-weight: bold;
+}
