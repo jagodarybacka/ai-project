@@ -1,11 +1,18 @@
 /*
- A* algorithm
- Find path from start point to end point
+ ================  A* algorithm  ===============================
+ Find path from start cell to end cell
 
- map
- start - {x: _ , y: _ }
- end - {x: _ , y: _ }
- traversable: default value of traversable cell
+ A(map, start, end)
+
+ @map - with traversable cells = -1
+ @start - {x: _ , y: _ }
+ @end - {x: _ , y: _ }
+
+ return path: [{x: _ , y: _ }, ...]
+
+ drawMap() - draw map to the console
+
+ ================  Example at the end of file ==================
 */
 
 
@@ -39,6 +46,7 @@ function traverstateMap (map) {
   })
   return newMap;
 }
+
 function drawMap(map) {
   map = traverstateMap(map);
   let string = " 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14\n";
@@ -52,6 +60,7 @@ function drawMap(map) {
   })
   console.log(string)
 }
+
 function calculateNeighbours(map, current, start, end) {
   let x = current.x;
   let y = current.y;
@@ -80,7 +89,7 @@ function calculateNeighbours(map, current, start, end) {
     map[el.x][el.y].parent = current;
     open.push({x: el.x, y: el.y})
   })
-  // console.log(neighbours);
+
   return { map: map, neighbours: neighbours };
 }
 
@@ -97,11 +106,11 @@ function pathReconstruct(map, end) {
     }
   }
 }
+
 function A (map, s, e) {
     map = traverstateMap(map);
 
     let current, path = [], neighbours = [];
-
 
     // start node f cost is 0
     map[s.x][s.y].f = 0;
@@ -115,7 +124,6 @@ function A (map, s, e) {
     while (1) {
       // pick element with lowest F cost
       current = lowestF(open, map);
-      // console.log("Current: ", current)
       // remove current from open set
       open.splice(open.indexOf(current), 1);
       // move current to closed set
@@ -124,22 +132,18 @@ function A (map, s, e) {
       map[current.x][current.y].closed = true;
       // path has been found
       if (current.x == e.x && current.y == e.y) {
-        console.log("path has been found");
-        console.log(pathReconstruct(map, e));
-        return;
+        return pathReconstruct(map, e);
       }
 
       let calcN = calculateNeighbours(map, current, s, e);
       map = calcN.map;
-      // console.log("Open ",open);
-
     }
 }
 
 
+/*
 
-
-let map = [ // zawiera układ obiektów na mapie świata
+let map = [
   [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
   [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
   [ 0,  0,  0,  0,  1, -1,  1,  0,  0,  0,  0,  0,  2,  0,  0],
@@ -157,9 +161,9 @@ let map = [ // zawiera układ obiektów na mapie świata
   [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0]
 ];
 
-drawMap(map)
-// let tmap = traverstateMap(map)
 let start = {x: 2, y: 5};
 let end = {x: 3, y: 12};
-A(map, start, end)
-// calculateNeighbours(tmap, start, start, end)
+
+console.log(A(map, start, end))
+
+*/
