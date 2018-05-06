@@ -379,11 +379,11 @@ const display = (function() {
   world.init();
 
 
-  // var stats = document.querySelector('.stats');
-  //
-  // setInterval(function() {
-  //   display.generateStats(stats, world.map) // tworzenie sekcji wyświetlającej statystyki
-  // }, 1000)
+  var stats = document.querySelector('.stats');
+
+  setInterval(function() {
+    display.generateStats(stats, world.map) // tworzenie sekcji wyświetlającej statystyki
+  }, 1000)
 
   var log = document
 
@@ -403,66 +403,69 @@ const display = (function() {
     })
   })
 
-  // var input = document.querySelector("input"); // przechwytywanie inputu
-  // input.onchange = function() {
-  //   var home = null; // na użytek eventloga
-  //   eventLog.addOrder(this.value); // event log księguje input
-  //   var ptrn = /[0-9]*[0-9]|#\d+|zabierz|zostaw|papier|plastik|szkło|inne|wszystko|śmieci|śmietnisku|śmietnisko|wysypisko|wysypisku/gi;
-  //   var value = this.value.match(ptrn); // wyszukiwanie wystąpień słów z ptrn w inpucie
-  //   if(value == null) eventLog.addOrderFail(); // jeżeli brak rozpoznawalnych słów -> zwraca komunikat
-  //   var coord = [];
-  //   var leave = false, pick = false,
-  //       what =  {
-  //         plastic: false,
-  //         glass: false,
-  //         paper: false,
-  //         other: false
-  //       };
-  //
-  //   value.forEach(function(e) { // interpretacja zgromadzonych wyrażeń regularnych
-  //     e = e.toString(); // wyszukiwanie informacji o czynności do wykonania i miejscu przeznaczenia śmieciarki
-  //     if (/zabierz/gi.test(e)) {
-  //       pick = true;
-  //     } else if (/zostaw/gi.test(e)) {
-  //       leave = true;
-  //     } else if (/#\d+/gi.test(e)) {
-  //       coord = buildings[e];
-  //       home = e;
-  //     } else if (/śmietnisku|śmietnisko|wysypisko|wysypisku/gi.test(e)) {
-  //       coord = buildings['#2'];
-  //       home = '#2';
-  //     } else if (/[0-9]*[0-9]/gi.test(e)) {
-  //       let x =  parseInt(e);
-  //       coord.push(x);
-  //     }
-  //
-  //     if (pick === true || leave === true) { // wyszukiwanie informacji o rodzaju śmieci do obsłużenia
-  //       if (/papier/gi.test(e)) {
-  //         what.paper = true;
-  //       }  else if (/plastik/gi.test(e)) {
-  //         what.plastic = true;
-  //       } else if (/szkło/gi.test(e)) {
-  //         what.glass = true
-  //       } else if (/inne/gi.test(e)) {
-  //         what.other = true;
-  //       } else if (/wszystko|śmieci/gi.test(e)){
-  //         for(e in what) {
-  //           what[e] = true;
-  //         }
-  //       }
-  //     }
-  //   })
-  //   if (!coord[0] || !coord[1]) {
-  //     coord = Object.keys(truck.coordinates).map(x => truck.coordinates[x]);
-  //   }
-  //   if (home === null || !pick && !leave || !(what.paper || what.plastic || what.glass || what.other)) { // sprawdza, czy rozkaz zawiera wszystkie potrzebne parametry
-  //     eventLog.addOrderFail();
-  //   }
-  //   else {
-  //     display.moveTruck(world.map[coord[0]][coord[1]], truck, pick, leave, what); // gotowy rozkaz dla ciężarówki
-  //     eventLog.addOrderApproval(pick, leave, what, home); // generowanie potwierdzenia przyjęcia rozkazu
-  //   }
-  // }
+  display.moveTruck(world.map[coord[0]][coord[1]], truck);
+
+  var input = document.querySelector("input"); // przechwytywanie inputu
+  input.onchange = function() {
+    var home = null; // na użytek eventloga
+    eventLog.addOrder(this.value); // event log księguje input
+    var ptrn = /[0-9]*[0-9]|o to zdaje mie sie ze mdleje ile razy musiałam wychodzic z autobusu bo zdawałao mi sie ze upadne na ziemie a okazała sie to tylko mimi wymysłam i musiała isc do domu na pieszo .a mam dopiero 23 lata a zaczeło sie w wieku 19 lat #\d+|zabierz|zostaw|papier|plastik|szkło|inne|wszystko|śmieci|śmietnisku|śmietnisko|wysypisko|wysypisku/gi;
+    var value = this.value.match(ptrn); // wyszukiwanie wystąpień słów z ptrn w inpucie
+    if(value == null) eventLog.addOrderFail(); // jeżeli brak rozpoznawalnych słów -> zwraca komunikat
+    var coord = [];
+    var leave = false, pick = false,
+        what =  {
+          plastic: false,
+          glass: false,
+          paper: false,
+          other: false
+        };
+
+    value.forEach(function(e) { // interpretacja zgromadzonych wyrażeń regularnych
+      e = e.toString(); // wyszukiwanie informacji o czynności do wykonania i miejscu przeznaczenia śmieciarki
+      if (/zabierz/gi.test(e)) {
+        pick = true;
+      } else if (/zostaw/gi.test(e)) {
+        leave = true;
+      } else if (/#\d+/gi.test(e)) {
+        coord = buildings[e];
+        home = e;
+      } else if (/śmietnisku|śmietnisko|wysypisko|wysypisku/gi.test(e)) {
+        coord = buildings['#2'];
+        home = '#2';
+      } else if (/[0-9]*[0-9]/gi.test(e)) {
+        let x =  parseInt(e);
+        coord.push(x);
+      }
+
+      if (pick === true || leave === true) { // wyszukiwanie informacji o rodzaju śmieci do obsłużenia
+        if (/papier/gi.test(e)) {
+          what.paper = true;
+        }  else if (/plastik/gi.test(e)) {
+          what.plastic = true;
+        } else if (/szkło/gi.test(e)) {
+          what.glass = true
+        } else if (/inne/gi.test(e)) {
+          what.other = true;
+        } else if (/wszystko|śmieci/gi.test(e)){
+          for(e in what) {
+            what[e] = true;
+          }
+        }
+      }
+    })
+    if (!coord[0] || !coord[1]) {
+      coord = Object.keys(truck.coordinates).map(x => truck.coordinates[x]);
+    }
+    if (home === null || !pick && !leave || !(what.paper || what.plastic || what.glass || what.other)) { // sprawdza, czy rozkaz zawiera wszystkie potrzebne parametry
+      eventLog.addOrderFail();
+    }
+    else {
+      display.moveTruck(world.map[coord[0]][coord[1]], truck, pick, leave, what); // gotowy rozkaz dla ciężarówki
+      eventLog.addOrderApproval(pick, leave, what, home); // generowanie potwierdzenia przyjęcia rozkazu
+    }
+  }
+
 }());
 
 

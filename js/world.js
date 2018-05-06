@@ -38,7 +38,6 @@ function PrintWorld(map) {
       if (el == 2) {
         image.src = 'img/wysypisko.png';
       }
-      // console.log(image);
     })
   })
 }
@@ -52,7 +51,9 @@ function PrintTruck(x, y) {
 
 
 }
-
+let start = {x: 2, y: 5};
+let end = {x: 3, y: 12};
+console.log(A(map, start, end))
 
 PrintWorld(map)
-PrintTruck(10, 10);
+PrintTruck(5, 5);
