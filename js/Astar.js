@@ -49,7 +49,7 @@ function traverstateMap (map) {
 
 function drawMap(map) {
   map = traverstateMap(map);
-  let string = " 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14\n";
+  let string = " 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24\n";
   map.forEach((line, x) => {
 
     line.forEach((el, y) => {
@@ -68,18 +68,21 @@ function calculateNeighbours(map, current, start, end) {
   let x_max = map.length;
   let y_max = map[0].length-1;
 
-  if (x && y)                 neighbours.push(map[x-1][y-1]);
+  // if (x && y)                 neighbours.push(map[x-1][y-1]);
   if (x)                      neighbours.push(map[x-1][y]);
-  if (x && y < y_max)         neighbours.push(map[x-1][y+1]);
+  // if (x && y < y_max)         neighbours.push(map[x-1][y+1]);
   if (y)                      neighbours.push(map[x][y-1]);
   if (y < y_max)              neighbours.push(map[x][y+1]);
-  if (x < x_max && y)         neighbours.push(map[x+1][y-1]);
+  // if (x < x_max && y)         neighbours.push(map[x+1][y-1]);
   if (x < x_max)              neighbours.push(map[x+1][y]);
-  if (x < x_max && y < y_max) neighbours.push(map[x+1][y+1]);
+  // if (x < x_max && y < y_max) neighbours.push(map[x+1][y+1]);
   neighbours = neighbours.filter((el) => el.travers && el.closed == undefined)
   neighbours.forEach((el) => {
+    // odleglosc od startu
     let g = Math.sqrt(Math.pow(el.x - start.x, 2) + Math.pow(el.y - start.y, 2))
+    // odległosc od konca
     let h = Math.sqrt(Math.pow(el.x - end.x, 2) + Math.pow(el.y - end.y, 2))
+    g*=0.7;
     el.f = g+h;
     el.g = g;
     el.h = h;
