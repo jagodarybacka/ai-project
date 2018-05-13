@@ -8,15 +8,12 @@
   @param {Array}    destinations - list of points
   @param {function} distance     - function that given a list of destinations will return final distance of that path
   @param {number}   T            - temperature of simulation
-  @param {number}   L            - number of accepted solutions
-  @param {number}   M            - number of new solutions
 */
 
-function TSP(destinations, distance, T, L) {
+function TSP(destinations, distance, T) {
   var S = shuffle(destinations);
   var S_new;
-      T = T || 10000000;
-    //  L = L || 3;
+      T = T || 10;
   var deltaE;
   var iteration = 0;
   var destinationsAmount = destinations.length;
@@ -25,19 +22,17 @@ function TSP(destinations, distance, T, L) {
 
   var dS;
   var dSn;
+
   console.log("************Start Algorithm*****************");
 
   while (T > 0) {
-    // console.log("Old", S);
     S_new = S.slice();
     S_new = miniShuffle(S_new);
-    // console.log("Old", S);
-    // console.log("New", S_new);
-    // console.log("");
     dS = distance(S);
     dSn = distance(S_new);
     deltaE = dSn - dS;
 
+    // Solution Acccepted
     if (deltaE < 0 || Math.random() < Math.pow(Math.E, (-1*deltaE)/T)) {
       S = S_new.slice();
       dS = dSn;
@@ -58,8 +53,8 @@ function TSP(destinations, distance, T, L) {
       console.log("bestDistance: ", bestDistance);
       console.log("T: ", T);
       console.log("Iterations: ", iteration);
-
       console.log("");
+
     }
 
     T = T / (1 + Math.log(iteration+1));
@@ -109,5 +104,4 @@ function simpleDistance (destinations) {
   return distance;
 }
 
-
-TSP([1,2,3,4,5,6,7,8,9,10], simpleDistance)
+// TSP([1,2,3,4,5,6,7,8,9,10], simpleDistance)

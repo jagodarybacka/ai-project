@@ -84,35 +84,57 @@ function PrintTruck(x, y) {
 }
 
 
-function move(start, end) {
-if (map1[start.x][start.y] != -1) {
-  PrintWorld(map1)
-  PrintTruck(start.y, start.x);
-  alert("Starting point is not traversable!")
-} else if (map1[end.x][end.y] != -1) {
-  PrintWorld(map1)
-  PrintTruck(end.y, end.x);
-  alert("End point is not traversable!")
-} else {
-  let a = A(map1, start, end).reverse();
-  let path = a.concat([end])
-  console.log(path);
-
-  let i = 0;
-
-  const animate = () => {
-    let obj = path[i];
+function moveSimple(start, end) {
+  if (map1[start.x][start.y] != -1) {
     PrintWorld(map1)
-    PrintTruck(obj.y, obj.x);
-    if (i < path.length-1) i++;
+    PrintTruck(start.y, start.x);
+    alert("Starting point is not traversable!")
+  } else if (map1[end.x][end.y] != -1) {
+    PrintWorld(map1)
+    PrintTruck(end.y, end.x);
+    alert("End point is not traversable!")
+  } else {
+    let a = A(map1, start, end).reverse();
+    let path = a.concat([end])
+    console.log(path);
+
+    let i = 0;
+
+    const animate = () => {
+      let obj = path[i];
+      PrintWorld(map1)
+      PrintTruck(obj.y, obj.x);
+      if (i < path.length-1) i++;
+    }
+    window.setInterval(animate, 500)
   }
-  window.setInterval(animate, 500)
-  console.log(path.length);
 }
+
+function moveMultiple (destinations) {
+
 }
+
+function distanceForTSP(destinations) {
+  var distance = 0;
+  for (var i = 0; i < destinations.length-1; i++) {
+    distance += Math.pow(( destinations[i].x - destinations[i+1].x ), 2) + Math.pow(destinations[i].y - destinations[i+1].y,2);
+    // var newDist = A(map1, destinations[i], destinations[i+1]).length;
+    // console.log("Destinations: ", destinations[i], destinations[i+1]);
+    // console.log("A:", A(map1, destinations[i], destinations[i+1]));
+    // console.log("A.length", newDist);
+    // distance += newDist;
+  }
+  console.log("Overall distance: ", distance);
+  return distance;
+}
+
 
 let start = {x: 4, y: 18};
+let middle = {x: 7, y: 12};
 let end = {x: 18, y: 13};
+let destinations = [start, end, middle];
+TSP(destinations, distanceForTSP)
+// distanceForTSP(destinations)
 
-move(start, end)
+// moveSimple(start, end)
 drawMap(map1);
