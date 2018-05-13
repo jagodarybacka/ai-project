@@ -47,6 +47,7 @@ const map1 = [ // zawiera układ obiektów na mapie świata
 const canvas = document.querySelector('canvas').getContext("2d");;
 
 const droga = Math.floor(Math.random() * 6);
+const trawa = Math.floor(Math.random() * 6);
 
 function PrintWorld(map) {
 
@@ -57,7 +58,7 @@ function PrintWorld(map) {
         canvas.drawImage(image, i*32, j*32, 32, 32);
       }
       if (el == 0) {
-        image.src = 'img/trawa_' + Math.floor(Math.random() * 6) + '.png';
+        image.src = 'img/trawa_' + trawa + '.png';
       }
       if (el == -1) {
         image.src = 'img/droga_' + droga + '.png';
@@ -83,11 +84,7 @@ function PrintTruck(x, y) {
 }
 
 
-let start = {x: 2, y: 5};
-let end = {x: 21, y: 12};
-
-
-
+function move(start, end) {
 if (map1[start.x][start.y] != -1) {
   PrintWorld(map1)
   PrintTruck(start.y, start.x);
@@ -112,4 +109,10 @@ if (map1[start.x][start.y] != -1) {
   window.setInterval(animate, 500)
   console.log(path.length);
 }
+}
+
+let start = {x: 4, y: 18};
+let end = {x: 18, y: 13};
+
+move(start, end)
 drawMap(map1);
