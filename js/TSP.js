@@ -10,7 +10,7 @@
   @param {number}   T            - temperature of simulation
 */
 
-function TSP(destinations, distance, T, T0) {
+async function TSP(destinations, distance, T, T0) {
   var S = shuffle(destinations);
   var S_new;
       T = T || 10;
@@ -19,18 +19,17 @@ function TSP(destinations, distance, T, T0) {
   var iteration = 0;
   var destinationsAmount = destinations.length;
   var bestSolution = S.slice();
-  var bestDistance = distance(S);
-
+  var bestDistance = await distance(S);
   var dS;
   var dSn;
 
-  console.log("************Start Algorithm*****************");
-
+  // console.log("************Start Algorithm*****************");
+  //
   while (T > T0) {
     S_new = S.slice();
     S_new = miniShuffle(S_new);
-    dS = distance(S);
-    dSn = distance(S_new);
+    dS = await distance(S);
+    dSn = await distance(S_new);
     deltaE = dSn - dS;
 
     // Solution Acccepted
@@ -41,20 +40,20 @@ function TSP(destinations, distance, T, T0) {
         bestSolution = S.slice();
         bestDistance = dS;
 
-        console.log("===== NEW SOLUTION =====");
-        console.log("bestSolution ", bestSolution);
-        console.log("bestDistance: ", bestDistance);
-        console.log("");
+        // console.log("===== NEW SOLUTION =====");
+        // console.log("bestSolution ", bestSolution);
+        // console.log("bestDistance: ", bestDistance);
+        // console.log("");
 
       }
 
-      console.log("Solution: ", S);
-      console.log("bestSolution ", bestSolution);
-      console.log("Distance: ", dS);
-      console.log("bestDistance: ", bestDistance);
-      console.log("T: ", T);
-      console.log("Iterations: ", iteration);
-      console.log("");
+      // console.log("Solution: ", S);
+      // console.log("bestSolution ", bestSolution);
+      // console.log("Distance: ", dS);
+      // console.log("bestDistance: ", bestDistance);
+      // console.log("T: ", T);
+      // console.log("Iterations: ", iteration);
+      // console.log("");
 
     }
 
@@ -64,9 +63,10 @@ function TSP(destinations, distance, T, T0) {
   console.log("==== END OF ANNEALING ====");
   console.log("Final accepted solution is: ", bestSolution);
   console.log("Path length: ", bestDistance);
-  console.log("Temperature: ", T);
-  console.log("Iterations: ", iteration);
+  // console.log("Temperature: ", T);
+  // console.log("Iterations: ", iteration);
 
+  return bestSolution;
 }
 
 

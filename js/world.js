@@ -77,22 +77,41 @@ async function moveSimple(start, end) {
     let a = A(start, end);
     a = a.reverse();
     let path = a.concat([end])
-    // console.log(path);
+    console.log(path);
 
-  //   let i = 0;
-  //
-  //   const animate = () => {
-  //     let obj = path[i];
-  //     PrintWorld(map1)
-  //     PrintTruck(obj.y, obj.x);
-  //     if (i < path.length-1) i++;
-  //     else {
-  //       // console.log("done");
-  //       clearInterval(animation);
-  //     }
-  //   }
-  //   let animation = setInterval(animate, 500);
+    let i = 0;
+
+    const animate = () => {
+      let obj = path[i];
+      PrintWorld(map1)
+      PrintTruck(obj.y, obj.x);
+      if (i < path.length-1) i++;
+      else {
+        // console.log("done");
+        clearInterval(animation);
+      }
+    }
+    let animation = setInterval(animate, 500);
   }
+}
+
+async function move(destinations) {
+  let p = await path(destinations);
+  let i = 0;
+  console.log(await p);
+
+  const animate = () => {
+    let obj = p[i];
+    PrintWorld(map1)
+    PrintTruck(obj.y, obj.x);
+    if (i < p.length-1) i++;
+    else {
+      // console.log("done");
+      clearInterval(animation);
+    }
+  }
+  let animation = setInterval(animate, 500);
+
 }
 
 
@@ -101,14 +120,18 @@ function distanceForTSP(destinations) {
   return concatA(destinations).then(r => r.dist)
 }
 
+async function path(destinations) {
+  var arr = await TSP(destinations, distanceForTSP)
+  return await concatA(arr).then(r => r.path);
+}
+
 let start = {x: 4, y: 18};
 let middle = {x: 7, y: 12};
 let end = {x: 18, y: 13};
 let destinations = [start, middle, end]
 
 
-// moveSimple(middle, start)
-// drawMap(map1);
-distanceForTSP(destinations).then(r => console.log(r))
+drawMap(map1);
+console.log(destinations);
 
-// move(destinations)
+move(destinations)
