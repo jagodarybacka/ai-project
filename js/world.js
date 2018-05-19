@@ -63,11 +63,6 @@ function PrintTruck(x, y) {
   image.src = 'img/smieciarka_0.png';
 }
 
-function getPath(dest) {
-  console.log(obj);
-}
-
-
 async function moveSimple(start, end) {
   if (map1[start.x][start.y] != -1) {
     PrintWorld(map1)
@@ -101,37 +96,15 @@ async function moveSimple(start, end) {
 }
 
 
-function concatA(destinations) {
-  var dist = 0;
-  var path = [];
-  var arr = destinations;
-  return arr.reduce((promise, item, index) => {
-    return promise
-      .then((result) => {
-        return A(item[0], item[1]).then(r => {
-          path.push(r)
-          dist += r.length
-        })
-      })
-  }, Promise.resolve())
-    .then(() => {
-      path = [].concat.apply([], path);
-      return {
-        dist: dist,
-        path: path
-      }
-    })
-}
-
+/*  Help funciton for TSP */
 function distanceForTSP(destinations) {
   return concatA(destinations).then(r => r.dist)
 }
 
-
 let start = {x: 4, y: 18};
 let middle = {x: 7, y: 12};
 let end = {x: 18, y: 13};
-let destinations = [[start, middle], [middle, end]];
+let destinations = [start, middle, end]
 
 
 // moveSimple(middle, start)

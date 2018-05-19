@@ -174,7 +174,44 @@ function A (s, e, map = defaultMap) {
 }
 
 
+/*
+  Given multiple coord points it returns concatenation of Astar's
+  @return {
+    dist: {number} distance of whole path
+    path: {array} list of coords
+    }
+*/
+function concatA(destinations) {
+  var dist = 0;
+  var path = [];
+  var arr = reducing(destinations);
+  return arr.reduce((promise, item, index) => {
+    return promise
+      .then((result) => {
+        return A(item[0], item[1]).then(r => {
+          path.push(r)
+          dist += r.length
+        })
+      })
+  }, Promise.resolve())
+    .then(() => {
+      path = [].concat.apply([], path);
+      return {
+        dist: dist,
+        path: path
+      }
+    })
+}
 
+/*  Help function for concatA() */
+function reducing(destinations) {
+  var arr = []
+  destinations.reduce((prev, curr) => {
+    arr.push([prev, curr])
+    return curr
+  })
+  return arr
+}
 
 /*
 let start = {x: 2, y: 5};
