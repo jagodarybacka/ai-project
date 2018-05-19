@@ -10,14 +10,15 @@
   @param {number}   T            - temperature of simulation
 */
 
-function TSP(destinations, distance, T) {
+function TSP(destinations, distance, T, T0) {
   var S = shuffle(destinations);
   var S_new;
       T = T || 10;
+      T0 = T0 || 0;
   var deltaE;
   var iteration = 0;
   var destinationsAmount = destinations.length;
-  var bestSolution = [];
+  var bestSolution = S.slice();
   var bestDistance = distance(S);
 
   var dS;
@@ -25,7 +26,7 @@ function TSP(destinations, distance, T) {
 
   console.log("************Start Algorithm*****************");
 
-  while (T > 0) {
+  while (T > T0) {
     S_new = S.slice();
     S_new = miniShuffle(S_new);
     dS = distance(S);
