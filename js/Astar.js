@@ -204,14 +204,6 @@ function concatA(destinations) {
 }
 
 /*  Help function for concatA() */
-// function reducing(destinations) {
-//   var arr = []
-//   destinations.reduce((prev, curr) => {
-//     arr.push([prev, curr])
-//     return curr
-//   }, destinations.slice(-1)[0])
-//   return arr
-// }
 function reducing(dest) {
   var arr = []
   dest.reduce((prev, curr) => {

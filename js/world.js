@@ -106,7 +106,6 @@ async function move(destinations) {
     PrintTruck(obj.y, obj.x);
     if (i < p.length-1) i++;
     else {
-      // console.log("done");
       clearInterval(animation);
     }
   }
@@ -133,5 +132,4 @@ let destinations = [start, middle, end]
 
 drawMap(map1);
 console.log(destinations);
-
 move(destinations)
