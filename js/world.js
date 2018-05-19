@@ -101,7 +101,7 @@ async function moveSimple(start, end) {
 }
 
 
-function distanceForTSP (destinations) {
+function concatA(destinations) {
   var dist = 0;
   var path = [];
   var arr = destinations;
@@ -121,6 +121,10 @@ function distanceForTSP (destinations) {
         path: path
       }
     })
+}
+
+function distanceForTSP(destinations) {
+  return concatA(destinations).then(r => r.dist)
 }
 
 

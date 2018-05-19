@@ -163,7 +163,7 @@ function A (s, e, map = defaultMap) {
       map[current.x][current.y].closed = true;
       // path has been found
       if (current.x == e.x && current.y == e.y) {
-        var result = pathReconstruct(map, e)
+        var result = pathReconstruct(map, e).reverse();
         res(result);
       }
 
