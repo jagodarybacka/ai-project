@@ -96,21 +96,26 @@ async function moveSimple(start, end) {
 }
 
 async function move(destinations) {
-  let p = await path(destinations);
-  let i = 0;
-  console.log(await p);
+  try {
+    let p = await path(destinations);
+    let i = 0;
+    console.log(await p);
 
-  const animate = () => {
-    let obj = p[i];
-    PrintWorld(map1)
-    PrintTruck(obj.y, obj.x);
-    if (i < p.length-1) i++;
-    else {
-      clearInterval(animation);
+    const animate = () => {
+      let obj = p[i];
+      PrintWorld(map1)
+      PrintTruck(obj.y, obj.x);
+      if (i < p.length-1) i++;
+      else {
+        clearInterval(animation);
+      }
     }
+    let animation = setInterval(animate, 500);
+  } catch (err) {
+    PrintWorld(map1);
+    PrintTruck(12, 7);
+    alert("Problem with destinations' list")
   }
-  let animation = setInterval(animate, 500);
-
 }
 
 
@@ -125,11 +130,12 @@ async function path(destinations) {
 }
 
 let start = {x: 4, y: 18};
-let middle = {x: 7, y: 12};
+let middle1 = {x: 7, y: 12};
+let middle2 = {x: 13, y: 13};
 let end = {x: 18, y: 13};
-let destinations = [start, middle, end]
+let destinations = [start, middle1, middle2, end]
 
 
 drawMap(map1);
-console.log(destinations);
+console.log("List of destinations: ", destinations);
 move(destinations)

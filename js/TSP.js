@@ -8,6 +8,7 @@
   @param {Array}    destinations - list of points
   @param {function} distance     - function that given a list of destinations will return final distance of that path
   @param {number}   T            - temperature of simulation
+  @param {number}   T0           - temperature of simulation's stop value
 */
 
 async function TSP(destinations, distance, T, T0) {
@@ -105,4 +106,7 @@ function simpleDistance (destinations) {
   return distance;
 }
 
-// TSP([1,2,3,4,5,6,7,8,9,10], simpleDistance)
+
+
+console.log("======= SIMPLE EXAMPLE ========")
+TSP([1,2,3,4,5,6,7,8,9,10], simpleDistance)
