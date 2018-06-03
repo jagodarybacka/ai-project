@@ -2,8 +2,6 @@
 Project for Artificial Intelligence class
 
 
-![Screenshot]()
-
 Algorithms used in this project:
 
 - **A*** for finding path between two given points on map
