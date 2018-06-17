@@ -117,7 +117,24 @@ async function move(destinations) {
     alert("Problem with destinations' list")
   }
 }
-
+/*HOMES AND RUBBISH*/
+class Rubbish {
+  constructor(coordinates, glass = 0, metal = 0, paper = 0, plastic = 0, other = 0) {
+    this.coordinates = coordinates;
+    this.glass = glass;
+	this.metal = metal;
+    this.paper = paper;
+    this.plastic = plastic;
+    this.other = other;
+	this.color = color;
+	this.smell = smell;
+	this.sound = sound;
+	this.size = size;
+	this.weight = weight;
+	this.touch = touch;
+	this.transparency = transparency;
+  }
+}
 
 /*  Help funciton for TSP */
 function distanceForTSP(destinations) {
@@ -138,4 +155,60 @@ let destinations = [start, middle1, middle2, end]
 
 drawMap(map1);
 console.log("List of destinations: ", destinations);
-move(destinations)
+move(destinations);
+
+//ID3
+console.log("---decision tree ID3---");
+
+function getRandom(arr, n) {
+    var result = new Array(n),
+        len = arr.length,
+        taken = new Array(len);
+    if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
+}
+
+var smellS = ['Y', 'N'];
+var sizeS = ['S', 'M', 'L'];
+var transparencyS = ['Y', 'N'];
+var colorS = ['white','red','black','brown','green','blue'];
+var soundS = ['T', 'S', 'N'];
+var weightS = ['S','M','L'];
+var touchS = ['Y','N'];
+var res;
+
+var smell = getRandom(smellS, 1);
+var size = getRandom(sizeS, 1);
+var transparency = getRandom(transparencyS, 1);
+var color = getRandom(colorS, 1);
+var sound = getRandom(soundS, 1);
+var weight = getRandom(weightS, 1);
+var touch = getRandom(touchS, 1);
+
+console.log("characteristic set:");
+console.log("Smell", smell);
+console.log("Size", size);
+console.log("Transparency", transparency);
+console.log("Color", color);
+console.log("Sound", sound);
+console.log("Weight", weight);
+console.log("Touch", touch);
+
+if(sound == 'N')
+	if(smell == 'Y')
+		res = 'home rubbish';
+	else res = 'paper';
+if(sound == 'T')
+	res = 'plastik';
+if(sound == 'S')
+	if(transparency == 'Y')
+		res = 'glass';
+	else res = 'metal';
+
+console.log('Rubbish have sorted. Your rubbish is', res);
