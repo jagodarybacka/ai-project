@@ -316,6 +316,7 @@ else if(window.algorithmName=="genetic"){
 // console.log("List of destinations: ", destinations);
 // move_TSP(destinations);
 
+
 //ID3
 console.log("---decision tree ID3---");
 
