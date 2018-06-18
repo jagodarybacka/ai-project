@@ -1,7 +1,6 @@
 body {
   margin: 3rem;
   color: #666;
-  border-box;
 }
 
 h2 {
@@ -12,8 +11,20 @@ h2 {
 input {
   margin: 3rem;
   margin-bottom: 1rem;
-  width: 495px;
+  width: 15rem;
+  /* width: 495px; */
 }
+
+input.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 25px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 canvas {
   width: 495px;
   height: 495px;

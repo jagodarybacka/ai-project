@@ -5,12 +5,64 @@
     <title>Garbage truck - app</title>
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://joonku.com/js/machine_learning.min.js"></script>
   </head>
   <body>
-  	<canvas width="768" height="768"></canvas>
+      <script>
+          $(document).ready(function(){
+            algorithmName = '';
+            $('input:button').click(function () {
+              if(this.id === "tsp"){
+                algorithmName = "tsp";
+                // $.getScript("js/Astar.js");
+                // $.getScript("js/TSP.js");
+                // $.getScript("js/genetic.js");
+                // $.getScript("js/world.js");
+                // $.getScript("js/test.js");
+                // console.log(window.algorithmName);
+              }
+              else if(this.id == "genetic"){
+                algorithmName = "genetic";
+                // $.getScript("js/Astar.js");
+                // $.getScript("js/TSP.js");
+                // $.getScript("js/ga.js");
+                // $.getScript("js/world.js");
+                // $.getScript("js/test.js");
+                // console.log(window.algorithmName);
+              }
+                var head= document.getElementsByTagName('head')[0];
+                var script= document.createElement('script');
+                script.type= 'text/javascript';
+                script.src= 'js/Astar.js';
+                head.appendChild(script);
+                var script2= document.createElement('script');
+                script2.type= 'text/javascript';
+                script2.src= 'js/TSP.js';
+                head.appendChild(script2);
+                var script3= document.createElement('script');
+                script3.type= 'text/javascript';
+                script3.src= 'js/ga.js';
+                head.appendChild(script3);
+                var script4= document.createElement('script');
+                script4.type= 'text/javascript';
+                script4.src= 'js/world.js';
+                head.appendChild(script4);
+                var script5= document.createElement('script');
+                script5.type= 'text/javascript';
+                script5.src= 'js/test.js';
+                head.appendChild(script5);
+            });
+          });
+        </script>
+        <canvas width="768" height="768"></canvas>
+    <input type="button" class = "button" id = "genetic" value = "Genetic algorithm"></input>
+    <input type="button" class = "button" id = "tsp" value = "TSP"></input>
+    <!-- <script type="text/javascript" src="js/Astar.js"></script>
+    <script src="http://joonku.com/js/machine_learning.min.js"></script>
     <script type="text/javascript" src="js/Astar.js"></script>
     <script type="text/javascript" src="js/TSP.js"></script>
     <script type="text/javascript" src="js/world.js"></script>
-    <script type="text/javascript" src="js/test.js"></script>
+    <script type="text/javascript" src="js/test.js"></script>-->
   </body>
 </html>

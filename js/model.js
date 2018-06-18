@@ -44,6 +44,8 @@ class Home extends Garbage { //  instancją jest dom, zawierający swoje zbiorni
     this.id = id;
     this.warning_flag = false; // określa, czy ostrzegać o przepełnieniu -> eventLog.addCapacityWarning
     this.image.src = 'img/domek_' + Math.floor(Math.random() * 4) + '.png';
+    this.coordinatesx = x;
+    this.coordinatesy = y;
   }
 
   setStatus(amount) { // zwiększa zawartość parametru status o podaną wartość

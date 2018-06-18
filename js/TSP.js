@@ -108,5 +108,5 @@ function simpleDistance (destinations) {
 
 
 
-console.log("======= SIMPLE EXAMPLE ========")
-TSP([1,2,3,4,5,6,7,8,9,10], simpleDistance)
+// console.log("======= SIMPLE EXAMPLE ========")
+// TSP([1,2,3,4,5,6,7,8,9,10], simpleDistance)
