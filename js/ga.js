@@ -26,64 +26,87 @@ class LineUp {
   const probabilityThird = 3;
   const probabilityFourth = 1;
   
+  function findValues(){
+    currentBestPathLength = lineUps[0].lineUpDist;
+      for(let i = 0 ; i < lineUps.length ; i++){ //najmniejsza liczba opoznionych zadan
+        if(lineUps[i].lineUpDist < currentBestPathLength){
+            currentBestPathLength = lineUps[i].lineUpDist;
+            currentBest = {lineUp: lineUps[i].lineUp.slice(),dist: Number(lineUps[i].lineUpDist)};
+        }
+      }
+      startPathLength = 0;
+      for(let j = 0 ; j < lineUps.length ; j++){ //poczatkowa najwieksza liczba opoznionych zadan
+          if(lineUps[j].lineUpDist > startPathLength){
+              startPathLength = lineUps[j].lineUpDist;
+          }
+      }
+  }
   async function genetic_algorithm(destiniations, distance, howManyLoops, startPopSize, popSize){
-    lineUps = [];
-    let dist = await distance(destinations);
-    let lineup = new LineUp(lineUps.length, destinations, dist);
-    lineUps.push(lineup);
-    await add_permutations(destinations,startPopSize,distance);
-    while(howManyLoops > 0){
-      // console.log(howManyLoops);
-      if(ifBeginning == true){
-        ifBeginning = false;
-        currentBestPathLength = lineUps[0].lineUpDist;
-        for(let i = 0 ; i < lineUps.length ; i++){ //najmniejsza liczba opoznionych zadan
-          if(lineUps[i].lineUpDist < currentBestPathLength){
-              currentBestPathLength = lineUps[i].lineUpDist;
-              currentBest = {lineUp: lineUps[i].lineUp.slice(),dist: Number(lineUps[i].lineUpDist)};
+    if(destinations.length > 4) {
+      lineUps = [];
+      let dist = await distance(destinations);
+      let lineup = new LineUp(lineUps.length, destinations, dist);
+      lineUps.push(lineup);
+      await add_permutations(destinations,startPopSize,distance);
+      while(howManyLoops > 0){
+        if(ifBeginning == true){
+          ifBeginning = false;
+          currentBestPathLength = lineUps[0].lineUpDist;
+          for(let i = 0 ; i < lineUps.length ; i++){ //najmniejsza liczba opoznionych zadan
+            if(lineUps[i].lineUpDist < currentBestPathLength){
+                currentBestPathLength = lineUps[i].lineUpDist;
+                currentBest = {lineUp: lineUps[i].lineUp.slice(),dist: Number(lineUps[i].lineUpDist)};
+            }
+          }
+          startPathLength = 0;
+          for(let j = 0 ; j < lineUps.length ; j++){ //poczatkowa najwieksza liczba opoznionych zadan
+              if(lineUps[j].lineUpDist > startPathLength){
+                  startPathLength = lineUps[j].lineUpDist;
+              }
+          }
+          console.log('Start length: ',startPathLength);
+        }
+        // console.log('Current best: ',currentBestPathLength,currentBest);
+        // krzyzowanie
+        // console.log('crossing');
+        while(lineUps.length<popSize){
+          father = rand(0,lineUps.length-1);
+          do{
+              mother = rand(0,lineUps.length-1);} while(mother == father);
+          let lineup2 = cross(lineUps[mother],lineUps[father]);
+          if(lineup2.length == destinations.length){
+              let dist2 = await distance(lineup2);
+              let lineup3 = new LineUp(lineUps.length, lineup2, dist2);
+              lineUps.push(lineup3);
           }
         }
-        startPathLength = 0;
-        for(let j = 0 ; j < lineUps.length ; j++){ //poczatkowa najwieksza liczba opoznionych zadan
-            if(lineUps[j].lineUpDist > startPathLength){
-                startPathLength = lineUps[j].lineUpDist;
-            }
+        // mutacja
+        for(let k = 0 ; k < lineUps.length ; k++){
+          let ifM = rand(0,100); //czy zajdzie mutacja
+          let lineupm = await mutation(lineUps[k],ifM);
+          lineUps[k].lineUp = lineupm.slice();
+          lineUps[k].lineUpDist = await distance(lineUps[k].lineUp);
         }
-        console.log('Start length: ',startPathLength);
-      }
-      console.log('Current best: ',currentBestPathLength,currentBest);
-      // krzyzowanie
-      // console.log('crossing');
-      while(lineUps.length<popSize){
-        father = rand(0,lineUps.length-1);
-        do{
-            mother = rand(0,lineUps.length-1);} while(mother == father);
-        let lineup2 = cross(lineUps[mother],lineUps[father]);
-        if(lineup2.length == destinations.length){
-            let dist2 = await distance(lineup2);
-            let lineup3 = new LineUp(lineUps.length, lineup2, dist2);
-            lineUps.push(lineup3);
+        //selekcja
+        // console.log('selection');
+        selection();
+        for(let l = 0 ; l < lineUps.length ; l++){
+          if(lineUps[l].lineUpDist < currentBestPathLength){
+              currentBestPathLength = lineUps[l].lineUpDist;
+              currentBest = {lineUp: lineUps[l].lineUp.slice(),dist: Number(lineUps[l].lineUpDist)};
+          }
         }
+        howManyLoops--;
       }
-      // mutacja
-      for(let k = 0 ; k < lineUps.length ; k++){
-        let ifM = rand(0,100); //czy zajdzie mutacja
-        let lineupm = await mutation(lineUps[k],ifM);
-        lineUps[k].lineUp = lineupm.slice();
-        lineUps[k].lineUpDist = await distance(lineUps[k].lineUp);
+      if(howManyLoops == 0){
+        console.log('Best: ',currentBestPathLength,currentBest);
+        return currentBest.lineUp;
       }
-      //selekcja
-      // console.log('selection');
-      selection();
-      for(let l = 0 ; l < lineUps.length ; l++){
-        if(lineUps[l].lineUpDist < currentBestPathLength){
-            currentBestPathLength = lineUps[l].lineUpDist;
-            currentBest = {lineUp: lineUps[l].lineUp.slice(),dist: Number(lineUps[l].lineUpDist)};
-        }
-      }
-      howManyLoops--;
     }
-    return currentBest.lineUp;
+    else {
+      console.log('Best: ',destinations);
+      return destinations;
+    }
   }
   
   function rand(min,max){
@@ -288,21 +311,22 @@ class LineUp {
         let used = [];
         for(j = 0; j < destinations.length; j ++)
           used.push(false);
-        let permutation = [];
-        permutation.push(destinations[0]);
-        used[0] = true;
-        for(j = 0; j < destinations.length-2; j++){
-          let randLineUp;
-          do{
-            randLineUp = rand(1,destinations.length-2);
-          } while(used[randLineUp] == true);
-  
-          if(used[randLineUp] != true){
-            permutation.push(destinations[randLineUp]);
-            used[randLineUp] = true;
+          let permutation = [];
+          permutation.push(destinations[0]);
+          used[0] = true;
+          for(j = 0; j < destinations.length-1; j++){
+            let randLineUp;
+            do{
+              randLineUp = rand(1,destinations.length-1);
+            } while(used[randLineUp] == true);
+    
+            if(used[randLineUp] != true){
+              permutation.push(destinations[randLineUp]);
+              used[randLineUp] = true;
+            }
           }
-        }
-        permutation.push(destinations[destinations.length-1]);
+        // permutation.push(destinations[destinations.length-1]);
+        // console.log(permutation);
         let dist = await distance(permutation);
         let lineup = new LineUp(lineUps.length,permutation,dist,permutation);
         lineUps.push(lineup);

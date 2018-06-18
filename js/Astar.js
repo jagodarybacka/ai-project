@@ -195,7 +195,7 @@ function concatA(destinations) {
       })
   }, Promise.resolve())
     .then(() => {
-      path = [].concat.apply([], path);
+      path = [].concat.apply([], path).concat(destinations[destinations.length-1]);
       return {
         dist: dist,
         path: path
@@ -210,7 +210,7 @@ function reducing(dest) {
     arr.push([prev, curr])
     return curr
   })
-  arr.push([dest.slice(-1)[0], dest[0]])
+  // arr.push([dest.slice(-1)[0], dest[0]])
   return arr
 }
 

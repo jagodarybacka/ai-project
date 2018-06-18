@@ -223,28 +223,28 @@ async function moveSimple(start, end) {
   }
 }
 
-async function move_TSP(destinations) {
-  try {
-    let p = await path_TSP(destinations);
-    let i = 0;
-    console.log(await p);
+// async function move_TSP(destinations) {
+//   try {
+//     let p = await path_TSP(destinations);
+//     let i = 0;
+//     console.log(await p);
 
-    const animate = () => {
-      let obj = p[i];
-      PrintWorld(map1)
-      PrintTruck(obj.y, obj.x);
-      if (i < p.length-1) i++;
-      else {
-        clearInterval(animation);
-      }
-    }
-    let animation = setInterval(animate, 500);
-  } catch (err) {
-    PrintWorld(map1);
-    PrintTruck(12, 7);
-    alert("Problem with destinations' list")
-  }
-}
+//     const animate = () => {
+//       let obj = p[i];
+//       PrintWorld(map1)
+//       PrintTruck(obj.y, obj.x);
+//       if (i < p.length-1) i++;
+//       else {
+//         clearInterval(animation);
+//       }
+//     }
+//     let animation = setInterval(animate, 500);
+//   } catch (err) {
+//     PrintWorld(map1);
+//     PrintTruck(12, 7);
+//     alert("Problem with destinations' list")
+//   }
+// }
 
 async function move_GA(destinations) {
   try {
@@ -274,47 +274,19 @@ function distanceForTSP(destinations) {
   return concatA(destinations).then(r => r.dist)
 }
 
-async function path_TSP(destinations) {
-  var arr = await TSP(destinations, distanceForTSP)
-  return await concatA(arr).then(r => r.path);
-}
+// async function path_TSP(destinations) {
+//   var arr = await TSP(destinations, distanceForTSP)
+//   return await concatA(arr).then(r => r.path);
+// }
 
 async function path_GA(destinations) {
 var arr = await genetic_algorithm(destinations,distanceForTSP,100,10,40)
   return await concatA(arr).then(r => r.path);
 }
-// let start = {x: 4, y: 18};
-// let middle1 = {x: 7, y: 12};
-// let middle2 = {x: 13, y: 13};
-// let end = {x: 18, y: 13};
-// let destinations = [start, middle1, middle2, end]
 
-let astart = {x: 4, y: 18};
-let amiddle1 = {x: 8, y: 10};
-let amiddle2 = {x: 20, y: 16};
-let amiddle3 = {x: 2, y: 5};
-let amiddle4 = {x: 13, y: 13};
-let amiddle5 = {x: 12, y: 6};
-let amiddle6 = {x: 21, y: 12};
-let amiddle7 = {x: 11, y: 21};
-let aend = {x: 18, y: 13};
-// let destinations = [start,middle1,middle2,middle3,middle4,middle5,middle6,end]
-let destinations2 = [astart,amiddle1,amiddle2,amiddle3,amiddle4,amiddle5,amiddle6,amiddle7,aend]
-
-if(window.algorithmName=="tsp"){
-  drawMap(map1);
-  console.log("List of destinations: ", destinations);
-  move_TSP(destinations);
-}
-else if(window.algorithmName=="genetic"){
   drawMap(map1);
   console.log("List of destinations: ", destinations);
   move_GA(destinations);
-}
-
-// drawMap(map1);
-// console.log("List of destinations: ", destinations);
-// move_TSP(destinations);
 
 
 //ID3
