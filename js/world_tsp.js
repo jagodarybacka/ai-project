@@ -308,34 +308,36 @@ function getRandom(arr, n) {
 }
 
 
-var smell = getRandom(smellS, 1);
-var size = getRandom(sizeS, 1);
-var transparency = getRandom(transparencyS, 1);
-var color = getRandom(colorS, 1);
-var sound = getRandom(soundS, 1);
-var weight = getRandom(weightS, 1);
-var touch = getRandom(touchS, 1);
+for(var i=0;i<destinations.length;i++){
+  var smell = getRandom(smellS, 1);
+  var size = getRandom(sizeS, 1);
+  var transparency = getRandom(transparencyS, 1);
+  var color = getRandom(colorS, 1);
+  var sound = getRandom(soundS, 1);
+  var weight = getRandom(weightS, 1);
+  var touch = getRandom(touchS, 1);
 
-console.log("characteristic set:");
-console.log("Smell", smell);
-console.log("Size", size);
-console.log("Transparency", transparency);
-console.log("Color", color);
-console.log("Sound", sound);
-console.log("Weight", weight);
-console.log("Touch", touch);
+  console.log("characteristic set:");
+  console.log("Smell", smell);
+  console.log("Size", size);
+  console.log("Transparency", transparency);
+  console.log("Color", color);
+  console.log("Sound", sound);
+  console.log("Weight", weight);
+  console.log("Touch", touch);
 
-if(sound == 'N')
-	if(smell == 'Y')
-		res = 'home rubbish';
-	else res = 'paper';
-if(sound == 'T')
-	res = 'plastik';
-if(sound == 'S')
-	if(transparency == 'Y')
-		res = 'glass';
-	else res = 'metal';
+  if(sound == 'N')
+    if(smell == 'Y')
+      res = 'home rubbish';
+    else res = 'paper';
+  if(sound == 'T')
+    res = 'plastik';
+  if(sound == 'S')
+    if(transparency == 'Y')
+      res = 'glass';
+    else res = 'metal';
 
 
 
-console.log('Rubbish have sorted. Your rubbish is', res);
+  console.log('Rubbish have sorted. Your rubbish is', res);
+}
