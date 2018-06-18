@@ -164,8 +164,8 @@ async function move_GA(destinations) {
 }
 
 /*  Help funciton for TSP */
-function distanceForTSP(destinations) {
-  return concatA(destinations).then(r => r.dist)
+function distanceForTSP(destinations_list) {
+  return concatA(destinations_list).then(r => r.dist)
 }
 
 async function path_TSP(destinations) {
@@ -174,15 +174,16 @@ async function path_TSP(destinations) {
  }
  
  async function path_GA(destinations) {
- var arr = await genetic_algorithm(destinations,distanceForTSP,100,10,40)
+   var arr = await genetic_algorithm(destinations,distanceForTSP,100,10,40)
+   console.log(arr);
    return await concatA(arr).then(r => r.path);
  }
 
-let start = {x: 4, y: 18};
-let middle1 = {x: 7, y: 12};
-let middle2 = {x: 13, y: 13};
-let end = {x: 18, y: 13};
-let destinations = [start, middle1, middle2, end]
+// let start = {x: 4, y: 18};
+// let middle1 = {x: 7, y: 12};
+// let middle2 = {x: 13, y: 13};
+// let end = {x: 18, y: 13};
+// let destinations = [start, middle1, middle2, end]
 
 let astart = {x: 4, y: 18};
 let amiddle1 = {x: 8, y: 10};
@@ -194,7 +195,7 @@ let amiddle6 = {x: 21, y: 12};
 let amiddle7 = {x: 11, y: 21};
 let aend = {x: 18, y: 13};
 // let destinations = [start,middle1,middle2,middle3,middle4,middle5,middle6,end]
-let destinations2 = [astart,amiddle1,amiddle2,amiddle3,amiddle4,amiddle5,amiddle6,amiddle7,aend]
+let destinations = [astart,amiddle1,amiddle2,amiddle3,amiddle4,amiddle5,amiddle6,amiddle7,aend]
 
 if(window.algorithmName=="tsp"){
   drawMap(map1);
@@ -203,8 +204,8 @@ if(window.algorithmName=="tsp"){
 }
 else if(window.algorithmName=="genetic"){
   drawMap(map1);
-  console.log("List of destinations: ", destinations2);
-  move_GA(destinations2);
+  console.log("List of destinations: ", destinations);
+  move_GA(destinations);
 }
 
 // drawMap(map1);

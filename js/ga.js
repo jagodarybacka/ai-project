@@ -29,11 +29,12 @@ const probabilityFourth = 1;
 async function genetic_algorithm(destiniations, distance, howManyLoops, startPopSize, popSize){
   lineUps = [];
   let dist = await distance(destinations);
-  let lineup = new LineUp(lineUps.length, destinations, dist);
+  console.log('cokolwiek');
+  let lineup = new LineUp(lineUps.length,destinations, dist);
   lineUps.push(lineup);
   await add_permutations(destinations,startPopSize,distance);
   while(howManyLoops > 0){
-    // console.log(howManyLoops);
+    console.log(howManyLoops);
     if(ifBeginning == true){
       ifBeginning = false;
       currentBestPathLength = lineUps[0].lineUpDist;
@@ -282,27 +283,27 @@ function mutation(a,ifM){
 
 // Tworzy okreslona przez size liczbe permutacji z podanych punktow z zachowaniem startu i konca
 // Mozliwych permutacji dla sciezki o dl 8 --> 720
-async function add_permutations (destinations, size, distance) {
+async function add_permutations (destinationsP, size, distance) {
   let i = j= 0;
   for(i = 0; i < size ; i++){
       let used = [];
-      for(j = 0; j < destinations.length; j ++)
+      for(j = 0; j < destinationsP.length; j ++)
         used.push(false);
       let permutation = [];
-      permutation.push(destinations[0]);
+      permutation.push(destinationsP[0]);
       used[0] = true;
-      for(j = 0; j < destinations.length-2; j++){
+      for(j = 0; j < destinationsP.length-2; j++){
         let randLineUp;
         do{
-          randLineUp = rand(1,destinations.length-2);
+          randLineUp = rand(1,destinationsP.length-2);
         } while(used[randLineUp] == true);
 
         if(used[randLineUp] != true){
-          permutation.push(destinations[randLineUp]);
+          permutation.push(destinationsP[randLineUp]);
           used[randLineUp] = true;
         }
       }
-      permutation.push(destinations[destinations.length-1]);
+      permutation.push(destinationsP[destinationsP.length-1]);
       let dist = await distance(permutation);
       let lineup = new LineUp(lineUps.length,permutation,dist,permutation);
       lineUps.push(lineup);
